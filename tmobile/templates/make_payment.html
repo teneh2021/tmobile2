@@ -1,0 +1,23 @@
+{% load widget_tweaks %}
+
+
+  <div class="modal-header" >
+    <p class="modal-title">You're now on T-Mobile payment site. You can pay as a guest using your phone number or login to your account using your phone number.
+     <strong>  Pay your exact amount: ${{total1}}</strong> or pay for you and any other line.
+        If you already paid in T-Mobile app, skip this payment and go to our Web App to upload the screenshot</p>
+         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+ <div class="modal-body">
+            <iframe src='https://www.t-mobile.com/guestpay/landing' width='100%' height='450px'></iframe>
+
+      </div>
+
+
+  <div class="modal-footer justify-content-between">
+    <p >Please screenshot the confirmation page and upload it in our Web App</p>
+      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+  </div>
+

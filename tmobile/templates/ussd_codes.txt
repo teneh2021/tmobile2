@@ -1,0 +1,14 @@
+Display your IMEI: *#06#
+Check Your Call Forwarding: *#67# or *#61#
+Hide your phone number when calling: #31#
+Activate Call Waiting: *43#
+Quick Test Menu (Samsung Galaxy Only) *#7353#
+Firmware (Samsung Galaxy Only) *#1234#
+Check family allowance usage: #326#
+check minute usage: #674#
+Check message usage: #674#
+Check data used, data plan, and expiration date: #932#
+
+
+
+

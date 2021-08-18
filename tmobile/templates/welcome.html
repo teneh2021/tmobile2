@@ -1,0 +1,54 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>Welcome</title>
+    	 <link rel="shortcut icon" type="image/png" href='{% static "favicon.ico" %}'> 
+
+ <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %} ">
+
+<style>
+  main{
+    width: 600px; background-color: rgba(88, 158, 216, 0.664); height: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+  }
+</style>
+  </head>
+  <body class="text-center" style="background-color: rgba(88, 78, 177, 0.541);"> 
+    
+<main class="position-absolute top-50 start-50 translate-middle" >
+    
+<h1 style="text-align: center;">Welcome to <br> screenshot upload website</h1>
+
+
+<br><br>
+  <div  >
+
+        <div style=" text-align: center;">
+ <ul class="nav nav-pills justify-content-center" >
+        <li class="nav-item"><a href="{% url 'tmo_amara:login' %}" class="nav-link" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="{% url 'tmo_amara:login' %}" class="nav-link">screenshot</a></li>
+        <li class="nav-item"><a href="{% url 'tmo_amara:login' %}" class="nav-link">Payment</a></li>
+      
+      </ul>
+      <br><br>
+
+        <button type="button" class="btn btn-outline-primary e-2"><a class="btn btn-primary e-2" href="{% url 'tmo_amara:login' %}" style="text-decoration: none;">Login</a></button>
+      </div>
+ 
+  </div>
+  </main> 
+<p class="position-absolute bottom-0 start-50 translate-middle-x" >&copy; 2021 T-Mobile Family Bill Payment App</p>
+
+      
+  </body>
+</html>

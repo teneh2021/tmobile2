@@ -1,0 +1,559 @@
+<!doctype html>
+{% load static %}
+{% load humanize %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>T-Mobile Bill Payment Tracker</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+
+	 <link rel="shortcut icon" type="image/png" href='{% static "favicon.ico" %}'> 
+
+    <!-- Bootstrap core CSS 
+<link href="bootstrap.css" rel="stylesheet">-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+<link href="{% static 'bootstrap.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      #mid-row{
+        height: 300px;
+      }
+
+      body{
+        background-color: rgb(33, 159, 163);
+      }
+    .my-main{
+        background-color: rgb(20, 148, 187) !important;
+      }
+
+      /* The animation code */
+      @keyframes bill-total {
+        from {color: brown;}
+        to {color: aquamarine;}
+      }
+      
+      #total1, #admin-comment {
+        color: white;
+        animation-name: bill-total;
+        animation-delay: 2.5s;
+        animation-duration: 6s;
+        position: relative;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes deadline {
+        from {color: rgb(255, 251, 0);}
+        to {color: aqua;}
+      }
+
+      #deadline{
+        color: white;
+        animation-name: deadline;
+        animation-delay: 2s;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes user-name {
+        0% {color: rgb(0, 183, 255); left: 0px; top: 0px;}
+        25% {color: rgb(0, 217, 255); left: 200px; top: 0px;}
+        50% {color: brown; left: 0px; top: 0px;}
+        75% {color:aquamarine; left: -200px; top: 0px;}
+        100% {color: antiquewhite; left: 0px; top: 0px;}
+      }
+
+      /* The element to apply the animation to */
+      #user-name {
+       
+        color: rgb(142, 52, 165);
+        animation-name: user-name;
+        position: relative;
+        animation-delay: 1.5s;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+
+    </style>
+
+
+  </head>
+  <body onload="loadPage()" >
+    {% block content %}
+
+
+{% if user.is_authenticated %}
+  
+
+
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">About</h4>
+          <p class="text-muted">This Web App is built to automate our T-Mobile bill payment breakdown 
+            for our account. Please feel free to give feedback about any issue with the app.</p>
+            <button type="button" class="btn btn-dark">
+  
+             <a href="{% url 'logout' %}">Logout</a>
+            </button>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4 class="text-white">Contact</h4>
+          <ul class="list-unstyled">
+            <li><a href="tel:2024221241" class="text-white">Cell: 2024221241</a></li>
+            <li><a href="mailto:sas@gmail.com" class="text-white">Email: sas@gmail.com</a></li>
+            <li><a href="https://www.facebook.com/" class="text-white">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+       <i class="fas fa-money-bill"></i><div style="color: black;"> ..</div> <strong> T-Mobile Bill Payment Tracker</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main > 
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        
+       <p id="diff"></p> 
+      
+        {% if request.user.last_name %}
+          {% if  gender %}
+          {% for gend in gender|slice:":1" %}
+            {% if gend.user_gender == 'Male' %}
+
+        <h1 class="fwj-light" id="user-name"><strong>Welcome Mr {{user.last_name}}</strong> </h1>
+            {% elif  gend.user_gender == 'Female' %}
+                  <h1 class="fwj-light" id="user-name"><strong>Welcome Mrs {{user.last_name}}</strong> </h1>
+                
+            {% else %}
+                  <h1 class="fwj-light" id="user-name"><strong>Welcome {{user.last_name}}</strong> </h1>
+          {% endif %}
+         {% endfor %} 
+            
+        {% else %}  
+          <h1 class="fwj-light" id="user-name"><strong>Welcome {{user.last_name}}</strong> </h1>
+        {% endif %}
+        {% else %}
+        <h1 class="fwj-light" id="user-name"><strong>Welcome {{user}}</strong> </h1>
+      {% endif %}
+        
+        {% if flag %}
+        <p class="lead text-white">Your bill for this month is: <div class="text-white" ><strong id="total1">Paid </strong><br><small id="total1">Thank you for the payment</small></div></p>
+        {%else %}
+        <p class="lead text-white">Your bill for this month is: <div class="text-white" ><strong id="total1">$ {{total}} </strong></div></p>
+
+        {% endif %}
+         <p class="lead text-white">Paymentdue date is:  <div class="text-white" ><strong id="deadline">{{deadline.deadline}}  5</strong></div></p>
+        <p>
+          <button type="button" class="btn  btn-primary modalButton" id="make_payment">Make payment</button>
+          <button  class="btn btn-secondary my-2" id="payment_history">Payment history</button>
+         <button type="button" class="btn btn-info my-2 modalButton" id="upload" >Upload screenshot</button>
+          <button type="button" class="btn btn-success my-2 modalButton" id="message" >Suggestion or Comment</button>
+
+        </p>
+        {% if dday.admin_comment %}
+        <p id="admin-comment"> {{dday.admin_comment}} </p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+
+  <div class="album py-5 bg-light my-main">
+    <div class="container my-container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top "  width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill=" rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Your bill breakdown</text></svg>
+
+            <div class="card-bgody">
+              <table class="table table-bordered border-primary table-striped">
+                <tbody>
+                  
+                <tr class="table-primary"><th>Bill Cycle</th> <td> {{deadline.billdate1}}</td></tr>
+               <tr class="table-secondary"><th>plan</th> <td >${{deadline.plans.0}}</td></tr> 
+                <tr class="table-success"><th>Equipment</th> <td>${{dday.equipment}}</td></tr>
+                <tr class="table-danger"><th>Netflix</th><td>${{deadline.neflixs}}</td></tr>
+                 <tr class="table-warning"><th>One time charge</th> <td>${{dday.one_charge}}</td></tr>
+                <tr class="table-info"><th>Subscription</th> <td>${{dday.add_on }}</td></tr>
+                <tr class="table-light"><th>Mid-cycle</th> <td>${{dday.mid_cycle}}</td></tr>
+
+                {% if listed.0 %}
+                  <tr class="table-dark"><th>Total pay</th> <td id="total" >Paid </td> </tr>
+                  {% else %}
+                <tr class="table-dark"><th>Total pay</th> <td id="total" >${{total}} </td> </tr>
+                {% endif %}
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between align-items-center">
+              
+                <small class="text-muted"> Last updated {{ deadline.plans.1|naturalday }} </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Equipment charge</text></svg>
+
+               <div class="card-bgody">
+              <table class="table table-bordered border-primary table-striped">
+                <tbody>
+                  
+                <tr class="table-primary"><th>Device name</th> <td> {{equipment.device_name}} </td></tr>
+                <tr class="table-secondary"><th>Original Price</th> <td>${{equipment.original_price}}</td></tr>
+                <tr class="table-success"><th>Monthly payment</th> <td>${{equipment.monthly}}</td></tr>
+                <tr class="table-danger"><th>Down payment</th><td>${{equipment.down_pay}}</td></tr>
+                <tr class="table-warning"><th>Start date</th> <td>{{equipment.date_created}}</td></tr>
+                <tr class="table-info"><th>Months remaining</th> <td>{{equipment.month_remained}}</td></tr>
+                <tr class="table-light"><th>Remaining payment</th> <td>${{equipment.amount_remained}}</td></tr>
+                <tr class="table-dark"><th>Total paid</th> <td>${{equipment.amount_paid}}</td></tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between align-items-center">
+              
+                <small class="text-muted"> Last updated {{deadline.plans.1|naturalday}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+ <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlfns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Recent Screenshot</text></svg>
+
+            <div class="card-body">
+
+              <div id="mid-row">  
+                {% if photo %}
+                 <img src=" {{photo.url}}" alt="screenshot" style="width: 100%; height: 100%;">
+                  
+                {% else %}
+
+              <p class="card-text">No screenshot uploaded</p>
+              {%endif %}
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">T-Mobile promotion page</text></svg>
+
+            <div class="card-body">
+              <div id="mid-row">  
+              <p class="card-text">T-Mobile often has promotions in various devices and services. 
+              Sales reps reveal more coupons at the end of the month to complete their sales quota, but you've to squeeze them more.
+                <ul>
+                  <li> <a target="blank" href="https://www.retailmenot.com/view/t-mobile.com" >Retailmenot </a> Third party</li>
+                  <li><a target="blank" href="https://get.joinhoney.com/dr-us-simplified-yellow-general/?utm_source=goog&utm_medium=sem&utm_campaign=GOOG_US_200310_NonBrand_All_All_NonBrand-Core_ETA_dr-us-simplified-yellow-general&utm_content=dr-us-simplified-yellow-general&gclid=Cj0KCQjw9O6HBhCrARIsADx5qCQj__k8jGnPyy6HuoTQPKAXeCN1IDKFrLHbip-GBelkQT42Xwt3yaIaAnn5EALw_wcB&from=r#honey-install-button">Honey</a> Third party</li>
+                  <li><a target="blank" href="https://www.groupon.com/coupons/t-mobile">Groupon</a> Third party</li>
+                </ul>
+                 
+              </p>
+              </div>
+               <div class="btn-group ">
+                 <p class="col-md-6">Get T-Mobile deals here:
+                  <button type="button" class="btn btn-sm btn-outline-secondary btn-primary"><a class="text-white" target="blank" href="https://www.t-mobile.com/offers/deals-hub">Official T-Mobile deal</a></button>
+                    </p>
+                    <p class="col-md-6">Get T-Mobile Tuesday app here:
+                      <button type="button" class="btn btn-sm btn-outline-secondary btn-primary"><a class="text-white" target="blank" href="https://play.google.com/store/apps/details?id=com.tmobile.tuesdays&cmpid=MGPO_TMT_C_BENFSTMT_NYFXL3KZ7TIM9W4ZH65198">Android</a></button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary"><a target="blank" href="https://apps.apple.com/us/app/t-mobile-tuesdays/id1111876388?cmpid=MGPO_TMT_C_BENFSTMT_Y46P396JL8S1WVX5W65199">Iphone</a></button>
+                    </p>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Announcement and Need to know</text></svg>
+
+            <div class="card-body "   >
+
+                {% include 'pagin.html' %}
+                
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Netflix set up </text></svg>
+
+            <div class="card-body">
+              <div id="mid-row"> 
+              <p class="card-text">We only have one standard Netflix account which allows only two users to simultaneously stream.
+                 Please don't make changes in settings. This can increase our bill. <br> <strong>Username</strong>: <br> <strong>password</strong>:
+                 <br>
+                 <a href="https://netflix.com" target="blank" >Play Netflix now</a> <br> Or download Netflix app from:
+                    </p>
+              </div>
+            
+
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary btn-primary"><a target="blank" class="text-white" href="https://play.google.com/store/apps/details?id=com.netflix.mediaclient">Play Store</a></button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a target="blank" href="https://apps.apple.com/us/app/netflix/id363590051">App Store</a></button>
+                 
+                </div>
+              
+              </div>
+
+             
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Pay in App</text></svg>
+
+          <div class="card-body">
+            <div id="mid-row" >
+              <iframe  class="cc-yt-video" src="https://www.youtube.com/embed/dMTWsWPPZ8w?rel=0" frameborder="0" allow="accelerometer; encrypted-media; autoplay; gyroscope; picture-in-picture" allowfullscreen style="width: 100%; height: 100%;"></iframe> 
+
+</div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary btn-primary"><a class="text-white" target="blank" href="https://play.google.com/store/apps/details?id=com.tmobile.pr.mytmobile&icid=MGPO_TMO_U_20COVID19_YATGI3MQP0ARH20EV20183">Play Store</a></button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a target="blank" href="https://apps.apple.com/app/apple-store/id561625752?icid=MGPO_TMO_U_20COVID19_C1QMVJG8YDS2Y8GPV20182">App Store</a></button>
+
+                </div>
+   
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Pay in store</text></svg>
+
+            <div class="card-body">
+              <div id="mid-row"> 
+              <p class="card-text">To make payment in store, follow the link below. Remember to upload the screenshot here for admin record</p>
+                            <p class="card-text">You can also call T-Mobile customer service 800-937-8997 or 611 but this may cost extra fee. You can also dial *729 in your T-Mobile phone to make payment .</p>
+
+               </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary btn-primary"><a class="text-white" target="blank" href="https://www.t-mobile.com/store-locator">Store Locator</a></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-primary"><a class="text-white"  href="tel:800-937-8997">Call now</a></button>
+                </div>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      
+
+             <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="rgb(10, 116, 216)"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Quick Access Codes   </text></svg>
+
+            <div class="card-body">
+              <div id="mid-row">  
+              <h6 >Just dial the short-code below as if you were making a phone call</h6>
+              <p class="card-text" >
+                  
+
+                  <strong>(#225#)</strong> – For your account balance and last payment received info. <br>
+
+                 <strong>(#646#)</strong> – For your minute use for the current billing cycle. <br>
+
+                 <strong>(#674#)</strong> – For your message use for the current billing cycle.</p>
+                  </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary modalButton" id="ussd_code">More</button>                 
+                </div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog mt-5 modal-xl" >
+        <div class="modal-content">
+        </div>
+      </div>
+</div>
+</main>
+
+
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#"><strong>Back to top</strong></a>
+    </p>
+    {% now "Y" as current_year %}
+
+    <p class="mb-1 text-white"> &copy; {{current_year}} T-Mobile Family Bill Payment Tracker </p>
+  </div>
+</footer>
+
+
+
+{% endif %}
+{% endblock content %}
+{% block script %}
+<script type="text/javascript"> //<![CDATA[
+  var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+  document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+//]]></script>
+<script language="JavaScript" type="text/javascript">
+  TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_sm_124x32.png", "POSDV", "none");
+</script>
+
+
+  <script src="{% static 'jquery-3.6.0.js' %}"></script>
+
+
+      <script src="{% static 'jquery.bootstrap.modal.forms.js' %}"></script>
+
+
+
+  <script type="text/javascript">
+  
+   function total(){
+   /*    var dict = JSON.parse("{{dday|escapejs}}");
+     document.getElementById('diff').innerHTML=dict;
+     for (x in dict){
+       
+     }
+   
+   var plan = {{dday.plan}};
+     var netfix = {{dday.neflix}};
+     var equipment = {{dday.equipment}};
+     var one_charge ={{dday.one_charge}};
+     var  add_on = {{dday.add_on}};
+     var mid_cycle = {{dday.mid_cycle}};  */
+     var paid1 = `{{paid}}`;
+     var total = '{{total}}';
+      
+              //document.getElementById('diff').innerHTML=paid;
+
+
+     //var total = plan + netfix + equipment + one_charge + add_on + mid_cycle;
+
+        if (paid ==1){
+           document.getElementById('total').innerHTML="$" + total;
+           document.getElementById('total1').innerHTML="$" + total;
+            }
+
+        else {document.getElementById('total').innerHTML="Paid";
+           document.getElementById('total1').innerHTML="Paid";
+          }
+        
+      
+
+  //alert("Note: you are leaving this page. Pay the exact bill: " + total + " . \nScreenshot your pay confirmation and upload it here for record.");
+}
+      $(function () {
+         
+  /*      
+       javascript
+*/
+          // Create book synchronous
+          function make_payment() {
+            $("#make_payment").modalForm({
+                formURL: "{% url 'tmo_amara:make_payment' %}",
+                modalID: "#create-modal"
+            });
+          }
+         make_payment();
+
+           function payment_history() {
+            $("#payment_history").modalForm({
+                formURL: "{% url 'tmo_amara:payment_history' %}",
+                modalID: "#create-modal"
+            });
+          }
+          payment_history();
+
+           function upload() {
+            $("#upload").modalForm({
+                formURL: "{% url 'tmo_amara:upload' %}",
+                modalID: "#create-modal"
+            });
+          }
+          upload();
+           function ussd_code() {
+            $("#ussd_code").modalForm({
+                formURL: "{% url 'tmo_amara:ussd_code' %}",
+                modalID: "#create-modal"
+            });
+          }
+         ussd_code();
+
+         function message(){
+           $("#message").modalForm({
+             formURL: "{% url 'tmo_amara:message' %}",
+             modalID: "#create-modal"
+           });
+         }
+         message();
+      });
+
+  </script>
+  <script>  
+
+        function loadPage(){      
+        total();
+      }
+   loadPage();
+</script>
+
+
+{% endblock script %}
+
+  </body>
+</html>

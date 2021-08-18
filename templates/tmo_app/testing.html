@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Bootstrap Example</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div class="container">
+         <h2>Modal Example</h2>
+         <!-- Trigger the modal with a button -->
+         <button type="button" class="btn btn-info btn-lg modalButton" data-name="
+<strong> #BAL# (#225#)</strong>:	Provides account balance and last payment	<br>							
+<strong>#BNG# (#264#):</strong>	Check the status of Binge On™	<br>								
+<strong>#BOF# (#263#):</strong>	Turn off Binge On (T-Mobile’s unlimited streaming data feature)		<br>								
+<strong>#BON# (#266#):</strong>	Turn on Binge On					<br>				
+<strong>#FAM# (#326#):</strong>	Check Family Allowance usage		<br>								
+<strong>#MIN# (#646#):</strong>	Check minute usage					<br>					
+<strong>#MSG# (#674#):</strong>	Check message usage									<br>	
+<strong>#WEB# (#932#):</strong>	Check data used, data plan, and expiration date			<br>							
+<strong>#NUM# (#686#):</strong>	Display your phone number					<br>					
+<strong>*PAY (*729):</strong>	Pay your bill over the phone					<br>					
+<strong>#PWD# (#793#):</strong>	Reset voicemail password						<br>				
+<strong>#PWO# (#796#):</strong>	Turn the voicemail password on or off	<br>									
+<strong>#ROF# (#763#):</strong>	Turn off international data roaming			<br>							
+<strong>#RON# (#766#):</strong>	Turn on international data roaming			<br>							
+<strong>*#06#:</strong>	Display device IMEI number									<br>	
+<strong>##004#:	</strong>Cancel call forwarding to voicemail (prevents new voicemail messages)		<br>								
+<strong>#31#1+PhoneNumber:</strong>	Show name and number on outgoing calls		<br>								
+<strong>*31#1+PhoneNumber:</strong>	Hide name and number on outgoing calls	<br>									
+<strong>*43#:	</strong>Turn on call waiting									<br>	
+<strong>#43#:</strong>	Turn off call waiting									<br>	
+<strong>*671+PhoneNumber:</strong>	Blocks outgoing Caller ID on a per-call basis. Information still visible to toll-free numbers and 911						<br>				
+" data-toggle="modal">Quick access codes</button>
+         <!-- Trigger the modal with a button -->
+         <button type="button" class="btn btn-info btn-lg modalButton" data-name="<form>
+          <div class='mb-3'>
+            <label for='recipient-name' class='col-form-label'>Recipient:</label>
+            <input type='text' class='form-control' id='recipient-name'>
+          </div>
+          <div class='mb-3'>
+            <label for='message-text' class='col-form-label'>Message:</label>
+            <textarea class='form-control' id='message-text'></textarea>
+          </div>
+          
+        </form>" data-toggle="modal">Enter payment</button>
+         <!-- Trigger the modal with a button -->
+         <button type="button" class="btn btn-info btn-lg modalButton" data-name="<form> <input type='text'></input> </form>" data-toggle="modal" >Open Modal 3</button>
+         <!-- Trigger the modal with a button -->
+         <button type="button" class="btn btn-info btn-lg modalButton" data-name="Clicked Modal 4" data-toggle="modal">Open Modal 4</button>
+         <!-- Trigger the modal with a button -->
+         <button type="button" class="btn btn-info btn-lg modalButton" data-name="Clicked Modal 5" data-toggle="modal">Open Modal 5</button>
+         <!-- Modal -->
+         <div class="modal fade" id="myModal" role="dialog" aria-hidden="true" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog">
+               <!-- Modal content-->
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     <h4 class="modal-title">Modal Header</h4>
+                  </div>
+                  <div class="modal-body">
+                     <p>Some text in the modal.</p>
+                  </div>
+                  <div class="modal-footer"> 
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">submit</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+      </div>
+
+      <div>
+        <!--  <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg">-->
+        <img src="../media/piad_in_app.png">
+      </div>
+
+      <script>
+          $(document).ready(function(e) {
+    // Initializing our modal.
+    $('#myModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: false,
+    });
+
+    $(document).on("click", ".modalButton", function() {
+
+        var ClickedButton = $(this).data("name");
+
+        // You can make an ajax call here if you want. 
+        // Get the data and append it to a modal body.
+
+
+        $(".modal-body").html("<p>" + ClickedButton + "</p> <p>.</p> ");
+        $('#myModal').modal('show');
+    });
+
+});
+      </script>
+      </body>
+      </html>
